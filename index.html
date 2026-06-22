@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>It's Okay | You've Worked Hard Today</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #FFFFFF;
+      --gray-50: #F8F9FA; --gray-100: #F1F3F5;
+      --gray-200: #E9ECEF; --gray-400: #ADB5BD;
+      --gray-600: #6C757D; --gray-700: #495057;
+      --gray-800: #343A40; --gray-900: #212529;
+      --teal: #3B82A0; --teal-light: #EBF4F8; --teal-dark: #2C6680;
+      --accent: #E8A87C; --green: #4CAF7D; --green-light: #EBF7F1;
+      --indigo: #4F46E5; --indigo-light: #EEF2FF;
+      --radius: 14px; --shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter','Noto Sans KR',sans-serif; background: var(--white); color: var(--gray-900); line-height: 1.7; }
+    .ko { display: none; }
+    body.lang-ko .en { display: none; }
+    body.lang-ko .ko { display: inline; }
+    body.lang-ko .ko-block { display: block !important; }
+    body.lang-ko .en-block { display: none !important; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-200); padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--teal); text-decoration: none; letter-spacing: -0.3px; }
+    .nav-links { display: flex; gap: 16px; list-style: none; align-items: center; flex-wrap: wrap; }
+    .nav-links a { font-size: 0.78rem; color: var(--gray-600); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+    .nav-links a:hover { color: var(--teal); }
+    .lang-toggle { background: var(--gray-100); border: 1.5px solid var(--gray-200); border-radius: 20px; padding: 5px 14px; font-size: 0.75rem; font-weight: 600; color: var(--gray-700); cursor: pointer; transition: all 0.2s; white-space: nowrap; margin-left: 8px; }
+    .lang-toggle:hover { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+
+    /* HERO */
+    .hero { background: linear-gradient(160deg, var(--teal-light) 0%, #fff 60%); padding: 80px 32px 64px; text-align: center; }
+    .hero-eyebrow { font-size: 0.75rem; font-weight: 600; color: var(--teal); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+    .hero h1 { font-size: clamp(2rem,5vw,3.2rem); font-weight: 700; color: var(--gray-900); line-height: 1.2; margin-bottom: 14px; letter-spacing: -0.5px; }
+    .hero h1 span { color: var(--teal); }
+    .hero-sub { font-size: 1rem; color: var(--gray-600); max-width: 520px; margin: 0 auto 32px; font-weight: 400; }
+    .symptom-label { font-size: 0.85rem; font-weight: 500; color: var(--gray-800); margin-bottom: 16px; }
+    .symptom-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 820px; margin: 0 auto; }
+    .symptom-btn { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 40px; padding: 10px 20px; font-size: 0.87rem; font-family: 'Inter','Noto Sans KR',sans-serif; color: var(--gray-700); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 7px; }
+    .symptom-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(59,130,160,0.15); }
+
+    /* SECTIONS */
+    .section { padding: 72px 32px; max-width: 1020px; margin: 0 auto; }
+    .section-wrap { background: var(--gray-50); }
+    .section-header { margin-bottom: 40px; }
+    .section-eyebrow { font-size: 0.7rem; font-weight: 600; color: var(--teal); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+    .section-title { font-size: 1.65rem; font-weight: 700; color: var(--gray-900); letter-spacing: -0.3px; margin-bottom: 4px; }
+    .section-subtitle { font-size: 0.85rem; color: var(--gray-600); font-weight: 400; }
+    .section-divider { border: none; border-top: 1px solid var(--gray-200); margin: 0 32px; }
+
+    /* CARDS */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px,1fr)); gap: 18px; }
+    .card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-200); padding: 24px; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.1); }
+    .card-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .card-title { font-size: 0.97rem; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; line-height: 1.4; }
+    .card-desc { font-size: 0.83rem; color: var(--gray-600); line-height: 1.78; }
+    .card-tag { display: inline-block; margin-top: 10px; background: var(--teal-light); color: var(--teal); font-size: 0.68rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+    .card-tag.green { background: var(--green-light); color: var(--green); }
+    .card-tag.orange { background: #FEF3EB; color: #D4722A; }
+    .usa-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--indigo-light); color: var(--indigo); font-size: 0.68rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-top: 8px; }
+
+    /* TIP LIST */
+    .tip-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+    .tip-list li { display: flex; gap: 14px; align-items: flex-start; background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-200); padding: 18px 20px; box-shadow: var(--shadow); }
+    .tip-num { min-width: 28px; height: 28px; background: var(--teal); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; margin-top: 2px; flex-shrink: 0; }
+    .tip-title { font-size: 0.92rem; font-weight: 600; color: var(--gray-900); margin-bottom: 5px; }
+    .tip-desc { font-size: 0.82rem; color: var(--gray-600); line-height: 1.75; }
+
+    /* ANIMATED STRETCH CARDS */
+    .stretch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 22px; }
+    .anim-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-200); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.2s, box-shadow 0.2s; }
+    .anim-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.1); }
+    .anim-stage { background: var(--teal-light); height: 190px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .anim-info { padding: 18px 20px; }
+    .anim-badge { font-size: 0.68rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; }
+    .anim-title { font-size: 0.97rem; font-weight: 700; color: var(--gray-900); margin-bottom: 7px; }
+    .anim-desc { font-size: 0.81rem; color: var(--gray-600); line-height: 1.72; }
+    .anim-duration { display: inline-block; margin-top: 10px; font-size: 0.7rem; color: var(--teal); font-weight: 600; }
+
+    /* US TIP BOX */
+    .us-tip { margin-top: 28px; background: var(--indigo-light); border-radius: var(--radius); padding: 20px 24px; border: 1px solid #C7D2FE; }
+    .us-tip-title { font-size: 0.82rem; color: #3730A3; font-weight: 700; margin-bottom: 8px; }
+    .us-tip-body { font-size: 0.8rem; color: #4338CA; line-height: 1.85; }
+
+    /* FOOTER */
+    footer { background: var(--gray-900); color: var(--gray-400); text-align: center; padding: 44px 32px; font-size: 0.82rem; line-height: 2.1; }
+    footer strong { color: var(--white); font-weight: 600; }
+
+    @media (max-width:700px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .hero { padding: 52px 20px 44px; }
+      .section { padding: 48px 20px; }
+      .section-divider { margin: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="en">It's Okay</span>
+    <span class="ko">괜찮아요</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#headache"><span class="en">Sleep</span><span class="ko">두통·수면</span></a></li>
+    <li><a href="#back"><span class="en">Back</span><span class="ko">허리</span></a></li>
+    <li><a href="#eyes"><span class="en">Eyes</span><span class="ko">눈 피로</span></a></li>
+    <li><a href="#stress"><span class="en">Stress</span><span class="ko">스트레스</span></a></li>
+    <li><a href="#nutrition"><span class="en">Nutrition</span><span class="ko">식습관</span></a></li>
+    <li><a href="#shoulder"><span class="en">Shoulder</span><span class="ko">어깨·목</span></a></li>
+    <li><a href="#wrist"><span class="en">Wrist</span><span class="ko">손목·발</span></a></li>
+    <li><a href="#exercise"><span class="en">Exercise</span><span class="ko">운동</span></a></li>
+    <li><a href="#hydration"><span class="en">Hydration</span><span class="ko">수분</span></a></li>
+    <li><a href="#posture"><span class="en">Posture</span><span class="ko">자세</span></a></li>
+    <li><a href="#immunity"><span class="en">Immunity</span><span class="ko">면역</span></a></li>
+    <li><a href="#digestion"><span class="en">Digestion</span><span class="ko">소화</span></a></li>
+    <li><a href="#energy"><span class="en">Energy</span><span class="ko">에너지</span></a></li>
+    <li><a href="#skin"><span class="en">Skin</span><span class="ko">피부</span></a></li>
+    <li><a href="#emergency"><span class="en">Clinic Guide</span><span class="ko">병원 안내</span></a></li>
+    <li><button class="lang-toggle" onclick="toggleLang()"><span class="en">한국어</span><span class="ko">English</span></button></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow"><span class="en">You've worked so hard today</span><span class="ko">오늘도 수고하셨어요</span></p>
+  <h1>
+    <span class="en">Where does it <span>hurt today?</span></span>
+    <span class="ko">지금 어디가 <span>불편하세요?</span></span>
+  </h1>
+  <p class="hero-sub">
+    <span class="en">A daily fatigue-relief guide for Koreans working hard in the US</span>
+    <span class="ko">미국에서 고생하시는 분들을 위한 일상 속 피로 회복 가이드</span>
+  </p>
+  <p class="symptom-label"><span class="en">Tap a symptom to jump there</span><span class="ko">증상을 선택해 바로 이동하세요</span></p>
+  <div class="symptom-grid">
+    <button class="symptom-btn" onclick="goTo('headache')">🤕 <span class="en">Headache & Sleep</span><span class="ko">두통 · 수면 부족</span></button>
+    <button class="symptom-btn" onclick="goTo('back')">🦴 <span class="en">Lower Back Pain</span><span class="ko">허리 통증</span></button>
+    <button class="symptom-btn" onclick="goTo('eyes')">👁️ <span class="en">Eye Strain</span><span class="ko">눈이 뻑뻑하고 피로함</span></button>
+    <button class="symptom-btn" onclick="goTo('stress')">🧠 <span class="en">Stress & Burnout</span><span class="ko">정신적 스트레스 · 번아웃</span></button>
+    <button class="symptom-btn" onclick="goTo('nutrition')">🥗 <span class="en">Nutrition</span><span class="ko">식욕 없음 · 영양 걱정</span></button>
+    <button class="symptom-btn" onclick="goTo('shoulder')">💆 <span class="en">Shoulder & Neck</span><span class="ko">어깨 · 목 뭉침</span></button>
+    <button class="symptom-btn" onclick="goTo('wrist')">🖐️ <span class="en">Wrist & Feet</span><span class="ko">손목 · 발 피로</span></button>
+    <button class="symptom-btn" onclick="goTo('exercise')">🏃 <span class="en">Exercise Routine</span><span class="ko">운동 루틴</span></button>
+    <button class="symptom-btn" onclick="goTo('hydration')">💧 <span class="en">Hydration</span><span class="ko">수분 보충</span></button>
+    <button class="symptom-btn" onclick="goTo('posture')">🪑 <span class="en">Posture Fix</span><span class="ko">자세 교정</span></button>
+    <button class="symptom-btn" onclick="goTo('immunity')">🛡️ <span class="en">Immunity</span><span class="ko">면역력</span></button>
+    <button class="symptom-btn" onclick="goTo('digestion')">🫃 <span class="en">Digestion</span><span class="ko">소화 불량</span></button>
+    <button class="symptom-btn" onclick="goTo('energy')">⚡ <span class="en">Energy Crash</span><span class="ko">에너지 저하</span></button>
+    <button class="symptom-btn" onclick="goTo('skin')">🌿 <span class="en">Dry Skin</span><span class="ko">건조한 피부</span></button>
+    <button class="symptom-btn" onclick="goTo('emergency')">🏥 <span class="en">US Clinic Guide</span><span class="ko">미국 병원 안내</span></button>
+  </div>
+</section>
+
+<!-- ═══════════ 1. HEADACHE / SLEEP ═══════════ -->
+<div id="headache">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 01</p>
+    <h2 class="section-title">🤕 <span class="en">Headache & Sleep Deprivation</span><span class="ko">두통 & 수면 부족</span></h2>
+    <p class="section-subtitle"><span class="en">Simple daily habits that cut through headaches and sleep debt.</span><span class="ko">두통과 수면 부채를 줄이는 간단한 일상 습관들.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">💧</div>
+      <div class="card-title"><span class="en">Warm water first thing after waking</span><span class="ko">기상 직후 물 한 컵 (미지근하게)</span></div>
+      <div class="card-desc"><span class="en">Rehydrating right after sleep prevents morning headaches. Room-temp water is easier on the stomach than cold. A Brita pitcher filters US tap water if that feels safer.</span><span class="ko">수면 중 잃은 수분 보충이 두통 예방의 첫걸음. 상온 물이 위장에 부담이 덜해요. 미국 수돗물 걱정되면 Brita 필터 피처 하나 두면 편해요.</span></div>
+      <span class="card-tag"><span class="en">Instant effect</span><span class="ko">즉시 효과</span></span>
+    </div>
+    <div class="card">
+      <div class="card-icon">📵</div>
+      <div class="card-title"><span class="en">No screens 30 min before bed</span><span class="ko">취침 30분 전 폰 내려놓기</span></div>
+      <div class="card-desc"><span class="en">Blue light blocks melatonin production. iPhone: Settings → Display & Brightness → Night Shift. Android: Digital Wellbeing → Bedtime Mode.</span><span class="ko">블루라이트가 멜라토닌 분비를 억제해요. iPhone: Settings → Night Shift. Android: Digital Wellbeing에서 켜세요.</span></div>
+      <span class="card-tag"><span class="en">Sleep quality</span><span class="ko">수면 질 개선</span></span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🫁</div>
+      <div class="card-title"><span class="en">4-7-8 Breathing</span><span class="ko">4-7-8 호흡법</span></div>
+      <div class="card-desc"><span class="en">Inhale 4 sec → hold 7 sec → exhale 8 sec. Repeat 3–4 times. Activates the parasympathetic nervous system and induces sleep quickly. Do it lying down.</span><span class="ko">4초 들이마시고 → 7초 참고 → 8초 내쉬기. 3~4회 반복하면 부교감신경이 활성화돼요. 누운 채로 바로 할 수 있어요.</span></div>
+      <span class="card-tag"><span class="en">Sleep aid</span><span class="ko">수면 유도</span></span>
+    </div>
+    <div class="card">
+      <div class="card-icon">☕</div>
+      <div class="card-title"><span class="en">No caffeine after 2 PM</span><span class="ko">오후 2시 이후 카페인 끊기</span></div>
+      <div class="card-desc"><span class="en">Caffeine's half-life is 5–6 hours — an afternoon coffee stays in your system until 11 PM. Swap for herbal tea. Celestial Seasonings Sleepytime is at CVS for ~$4.</span><span class="ko">카페인 반감기가 5~6시간이라 오후 커피는 밤 11시까지 남아요. CVS에서 Sleepytime Tea ~$4로 대체하세요.</span></div>
+      <span class="usa-badge">🇺🇸 CVS / Target</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌡️</div>
+      <div class="card-title"><span class="en">Bedroom at 65–68°F (18–20°C)</span><span class="ko">침실 온도 65~68°F 유지</span></div>
+      <div class="card-desc"><span class="en">Research-backed optimal sleep temperature. Set your apartment's AC/thermostat to this range. If it feels too cold, add a light blanket rather than raising the temp.</span><span class="ko">미국 과학자들이 권장하는 최적 수면 온도. 에어컨을 65~68°F로 맞추면 수면 깊이가 달라져요.</span></div>
+      <span class="card-tag"><span class="en">Sleep environment</span><span class="ko">수면 환경</span></span>
+    </div>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 2. BACK ═══════════ -->
+<div id="back" class="section-wrap">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 02</p>
+    <h2 class="section-title">🦴 <span class="en">Lower Back Stretches</span><span class="ko">허리 통증 스트레칭</span></h2>
+    <p class="section-subtitle"><span class="en">Animated guide — do these daily for lasting relief.</span><span class="ko">매일 하면 허리가 확실히 달라지는 스트레칭들.</span></p>
+  </div>
+  <div class="stretch-grid">
+
+    <!-- BACK 1: Knee to chest -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="150" width="200" height="7" rx="3.5" fill="#C8DDE8" opacity="0.7"/>
+          <rect x="58" y="122" width="92" height="22" rx="11" fill="#3B82A0"/>
+          <circle cx="43" cy="133" r="19" fill="#E8A87C"/>
+          <circle cx="38" cy="130" r="3" fill="#c47a4d"/>
+          <path d="M36,138 Q43,142 50,138" stroke="#c47a4d" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="140" y1="133" x2="195" y2="140" stroke="#2C6680" stroke-width="14" stroke-linecap="round"/>
+          <!-- Thigh -->
+          <line id="b1-thigh" x1="140" y1="126" x2="150" y2="106" stroke="#3B82A0" stroke-width="14" stroke-linecap="round"/>
+          <!-- Shin -->
+          <line id="b1-shin" x1="150" y1="106" x2="150" y2="84" stroke="#2C6680" stroke-width="12" stroke-linecap="round"/>
+          <!-- Hands -->
+          <ellipse id="b1-hands" cx="150" cy="95" rx="13" ry="9" fill="#E8A87C" opacity="0.9"/>
+          <defs><marker id="a1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3B82A0"/></marker></defs>
+          <path d="M168,82 Q174,70 160,67" stroke="#3B82A0" stroke-width="2" fill="none" stroke-dasharray="4,3" marker-end="url(#a1)"/>
+          <text x="110" y="174" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">KNEE → CHEST</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 01</div>
+        <div class="anim-title"><span class="en">Knee-to-Chest Stretch</span><span class="ko">무릎 가슴 당기기</span></div>
+        <div class="anim-desc"><span class="en">Lie on your back, grab one knee with both hands and pull it slowly toward your chest. Releases tension in the lower back immediately. Alternate sides.</span><span class="ko">등을 대고 누워 한쪽 무릎을 양손으로 가슴 쪽으로 천천히 당겨요. 허리 하부 긴장이 바로 풀려요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">30 sec each side × 3 sets</span><span class="ko">각 30초 × 3세트</span></span>
+      </div>
+    </div>
+
+    <!-- BACK 3: Seated Twist -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <rect x="58" y="122" width="88" height="10" rx="5" fill="#A0B4C0"/>
+          <rect x="66" y="132" width="7" height="38" rx="3" fill="#A0B4C0"/>
+          <rect x="131" y="132" width="7" height="38" rx="3" fill="#A0B4C0"/>
+          <rect x="135" y="92" width="8" height="34" rx="4" fill="#A0B4C0"/>
+          <line x1="88" y1="122" x2="84" y2="162" stroke="#2C6680" stroke-width="14" stroke-linecap="round"/>
+          <line x1="116" y1="122" x2="118" y2="162" stroke="#2C6680" stroke-width="14" stroke-linecap="round"/>
+          <g id="b3-torso">
+            <rect x="74" y="80" width="52" height="44" rx="12" fill="#3B82A0"/>
+            <circle cx="100" cy="65" r="17" fill="#E8A87C"/>
+            <circle cx="95" cy="62" r="2.5" fill="#c47a4d"/>
+            <line x1="120" y1="96" x2="154" y2="78" stroke="#E8A87C" stroke-width="10" stroke-linecap="round"/>
+            <circle cx="154" cy="78" r="7" fill="#E8A87C"/>
+          </g>
+          <path d="M120,72 Q145,58 146,82" stroke="#3B82A0" stroke-width="2" fill="none" stroke-dasharray="4,3" opacity="0.7"/>
+          <polygon points="141,84 147,80 149,88" fill="#3B82A0" opacity="0.7"/>
+          <text x="110" y="180" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">SEATED SPINAL TWIST</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 03</div>
+        <div class="anim-title"><span class="en">Seated Spinal Twist</span><span class="ko">앉아서 몸통 비틀기</span></div>
+        <div class="anim-desc"><span class="en">Sit in a chair, place one hand on the opposite knee, the other on the backrest, and slowly rotate. Hold 10 seconds. Great between work tasks.</span><span class="ko">의자에 앉아 한 손을 반대편 무릎에 대고 천천히 돌려 10초 유지. 사무 작업 중 틈틈이 하기 좋아요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">20 sec each side × 3</span><span class="ko">좌우 각 20초 × 3회</span></span>
+      </div>
+    </div>
+
+
+
+    <!-- BACK 6: Side Stretch -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="176" x2="210" y2="176" stroke="#C8DDE8" stroke-width="2.5"/>
+          <line x1="98" y1="140" x2="88" y2="176" stroke="#2C6680" stroke-width="13" stroke-linecap="round"/>
+          <line x1="112" y1="140" x2="120" y2="176" stroke="#2C6680" stroke-width="13" stroke-linecap="round"/>
+          <rect x="84" y="94" width="40" height="48" rx="14" fill="#3B82A0"/>
+          <circle cx="104" cy="78" r="18" fill="#E8A87C"/>
+          <circle cx="99" cy="75" r="2.5" fill="#c47a4d"/>
+          <line x1="86" y1="108" x2="68" y2="132" stroke="#E8A87C" stroke-width="10" stroke-linecap="round"/>
+          <line id="b6-arm" x1="122" y1="108" x2="152" y2="66" stroke="#E8A87C" stroke-width="10" stroke-linecap="round"/>
+          <path d="M122,108 Q158,84 158,44" stroke="#3B82A0" stroke-width="1.5" fill="none" stroke-dasharray="5,4" opacity="0.45"/>
+          <circle cx="152" cy="66" r="7" fill="#E8A87C" opacity="0.85"/>
+          <text x="168" y="55" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">reach!</text>
+          <text x="104" y="192" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">SIDE BODY STRETCH</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 06</div>
+        <div class="anim-title"><span class="en">Standing Side Stretch</span><span class="ko">서서 옆구리 늘리기</span></div>
+        <div class="anim-desc"><span class="en">Stand tall, raise one arm over your head and lean gently to the opposite side. Feel the stretch from hip to fingertip. Great for tightness from long sitting.</span><span class="ko">바로 서서 한 팔을 머리 위로 올리고 반대쪽으로 기울여요. 기상 직후에 하면 특히 상쾌해요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">20 sec each side × 2</span><span class="ko">좌우 각 20초 × 2회</span></span>
+      </div>
+    </div>
+
+  </div>
+  <div class="us-tip">
+    <p class="us-tip-title">🇺🇸 <span class="en">What you can use for back pain in the US</span><span class="ko">미국에서 허리 통증에 쓸 수 있는 것들</span></p>
+    <p class="us-tip-body">
+      <span class="en"><b>Icy Hot patch</b> (CVS/Walgreens ~$8) — Hot/cold effect for muscle relief. Fine to sleep with.<br/><b>Biofreeze gel</b> (~$12) — Apply before/after activity. Sometimes at Korean grocery stores.<br/><b>Heating pad</b> (Amazon ~$20–30) — Sunbeam or Pure Enrichment brands. Heat works better than cold for chronic back pain.</span>
+      <span class="ko"><b>Icy Hot 패치</b> (CVS/Walgreens ~$8) — 냉온 효과로 근육 완화. 붙이고 자도 돼요.<br/><b>Biofreeze 젤</b> (~$12) — 운동 전후 효과적. 한인마트에도 있어요.<br/><b>Heating Pad</b> (Amazon ~$20~30) — Sunbeam, Pure Enrichment 브랜드. 만성 허리 통증엔 열찜질 추천.</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 3. EYES ═══════════ -->
+<div id="eyes">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 03</p>
+    <h2 class="section-title">👁️ <span class="en">Eye Strain from Screen Work</span><span class="ko">눈 피로 (컴퓨터 작업)</span></h2>
+    <p class="section-subtitle"><span class="en">US indoor air is very dry — eyes need extra care here.</span><span class="ko">미국 실내는 특히 건조해 눈 관리가 중요해요.</span></p>
+  </div>
+  <ul class="tip-list">
+    <li><div class="tip-num">1</div><div><div class="tip-title"><span class="en">The 20-20-20 Rule</span><span class="ko">20-20-20 규칙</span></div><div class="tip-desc"><span class="en">Every 20 minutes, look at something 20 feet away for 20 seconds. Set a Screen Time alert every 20 min or download the free "20 20 20" app from the App Store.</span><span class="ko">20분 작업 → 20피트(약 6m) 거리를 → 20초 바라보기. Screen Time 알림을 20분으로 설정하거나 "20 20 20" 앱을 무료로 받으세요.</span></div></div></li>
+    <li><div class="tip-num">2</div><div><div class="tip-title"><span class="en">Keep artificial tears on hand</span><span class="ko">인공눈물 상시 구비</span></div><div class="tip-desc"><span class="en">US heating systems make indoor air extremely dry. Systane Ultra, Refresh Tears, or TheraTears at CVS/Walgreens ($8–12). Get the preservative-free single-use vials.</span><span class="ko">히팅 시스템으로 실내가 매우 건조해요. Systane Ultra, Refresh Tears가 CVS/Walgreens에서 $8~12. 방부제 없는 단회용 추천.</span></div></div></li>
+    <li><div class="tip-num">3</div><div><div class="tip-title"><span class="en">Night Mode on all your screens</span><span class="ko">모니터 Night Mode 설정</span></div><div class="tip-desc"><span class="en">Mac: System Settings → Displays → Night Shift (auto sunset). Windows: Settings → Night Light. Free app f.lux is also highly effective. Match brightness to ambient light.</span><span class="ko">Mac: System Settings → Night Shift. Windows: Settings → Night Light. 무료 앱 f.lux도 효과적이에요.</span></div></div></li>
+    <li><div class="tip-num">4</div><div><div class="tip-title"><span class="en">Warm compress over eyes</span><span class="ko">따뜻한 수건 눈 찜질</span></div><div class="tip-desc"><span class="en">Microwave a damp towel for 30 seconds and rest it over closed eyes for 5 min. Alternatively, the Bruder Eye Mask (Walmart/Amazon ~$15) is reusable and microwaveable.</span><span class="ko">적신 수건을 전자레인지에 30초 데워 5분 눈 위에 올려요. 또는 Bruder Eye Mask (~$15, 재사용 가능).</span></div></div></li>
+    <li><div class="tip-num">5</div><div><div class="tip-title"><span class="en">Blue light blocking glasses</span><span class="ko">블루라이트 차단 안경</span></div><div class="tip-desc"><span class="en">Amazon $15–25. Gunnar and TIJN are popular brands. If you wear prescription glasses, Zenni Optical can add blue light coating for ~+$17.</span><span class="ko">Amazon에서 $15~25. Gunnar, TIJN 브랜드가 인기. 도수 있으면 Zenni Optical에서 코팅 추가 ~+$17.</span></div></div></li>
+    <li><div class="tip-num">6</div><div><div class="tip-title"><span class="en">Eye acupressure points</span><span class="ko">눈 주위 가볍게 지압</span></div><div class="tip-desc"><span class="en">Press the inner corner of the eyebrow and the inner corner of the eye socket with your thumb and index finger for 10 seconds each. Relieves eye fatigue and headaches together.</span><span class="ko">눈썹 안쪽 끝과 눈 안쪽 모서리를 10초씩 지긋이 눌러요. 눈 피로와 두통을 동시에 완화해요.</span></div></div></li>
+  </ul>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 4. STRESS ═══════════ -->
+<div id="stress" class="section-wrap">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 04</p>
+    <h2 class="section-title">🧠 <span class="en">Mental Stress & Burnout</span><span class="ko">정신적 스트레스 & 번아웃</span></h2>
+    <p class="section-subtitle"><span class="en">Small habits that actually move the needle on stress.</span><span class="ko">스트레스를 실제로 줄이는 작은 습관들.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">📓</div><div class="card-title"><span class="en">3-line daily journal</span><span class="ko">하루 3줄 일기</span></div><div class="card-desc"><span class="en">One good thing, one hard thing, one thing you're looking forward to. Just 3 lines. Getting emotions out of your head reduces stress measurably. Try it in English for bonus language practice.</span><span class="ko">좋았던 것 1가지, 힘들었던 것 1가지, 내일 기대되는 것 1가지. 딱 3줄. 감정을 밖으로 꺼내는 것만으로 스트레스가 줄어요.</span></div><span class="card-tag"><span class="en">5 min/day</span><span class="ko">매일 5분</span></span></div>
+    <div class="card"><div class="card-icon">🚶</div><div class="card-title"><span class="en">10-min post-lunch walk</span><span class="ko">점심 후 10분 산책</span></div><div class="card-desc"><span class="en">Even a parking lot or sidewalk works. Sunlight triggers serotonin release. Search "park near me" on Google Maps to find the closest green space.</span><span class="ko">주차장 주변이라도 괜찮아요. 햇빛을 쬐면 세로토닌이 분비돼요. Google Maps에서 "park near me" 검색.</span></div><span class="card-tag"><span class="en">Instant effect</span><span class="ko">즉각 효과</span></span></div>
+    <div class="card"><div class="card-icon">🛀</div><div class="card-title"><span class="en">Epsom salt foot soak</span><span class="ko">Epsom Salt 족욕</span></div><div class="card-desc"><span class="en">Dr Teal's Epsom Salt at Target/Walmart (~$5–6). Add 2 cups to warm water and soak for 15–20 min. Magnesium absorbs through the skin and helps relax muscles.</span><span class="ko">Target/Walmart에서 Dr Teal's ~$5~6. 따뜻한 물에 2컵 풀고 15~20분 족욕. 마그네슘이 피부로 흡수돼요.</span></div><span class="usa-badge">🇺🇸 Target / Walmart</span></div>
+    <div class="card"><div class="card-icon">🎵</div><div class="card-title"><span class="en">15 min of your favorite music</span><span class="ko">좋아하는 음악 15분</span></div><div class="card-desc"><span class="en">Music releases dopamine. Even free Spotify works. Old favorite Korean songs are especially effective — familiar sounds reduce cortisol.</span><span class="ko">음악은 도파민을 분비시켜요. 어릴 때 좋아하던 한국 노래가 특히 효과적.</span></div><span class="card-tag"><span class="en">Mood reset</span><span class="ko">기분 전환</span></span></div>
+    <div class="card"><div class="card-icon">🗣️</div><div class="card-title"><span class="en">Regular calls with loved ones</span><span class="ko">가족·친구와 정기 통화</span></div><div class="card-desc"><span class="en">Schedule a weekly call on KakaoTalk voice/video — free. Korea is 13–17 hours ahead, so weekend mornings US time line up with late evening in Korea.</span><span class="ko">KakaoTalk 무료 통화로 주 1~2회 잡아두세요. 한국과 시차 14~17시간 — 미국 주말 오전이 한국 밤.</span></div><span class="card-tag"><span class="en">Emotional recovery</span><span class="ko">정서 회복</span></span></div>
+    <div class="card"><div class="card-icon">🧘</div><div class="card-title"><span class="en">Free meditation apps</span><span class="ko">명상 앱 (무료)</span></div><div class="card-desc"><span class="en">Insight Timer is free with thousands of meditations — some in Korean too. 10 min before bed also improves sleep quality.</span><span class="ko">Insight Timer는 무료로 수천 개 명상 제공. 한국어 명상도 일부 있어요. 자기 전 10분이면 수면 질도 개선.</span></div><span class="card-tag"><span class="en">Free</span><span class="ko">무료 앱</span></span></div>
+    <div class="card"><div class="card-icon">✅</div><div class="card-title"><span class="en">Tiny wins checklist</span><span class="ko">아주 작은 목표 달성하기</span></div><div class="card-desc"><span class="en">Big goals make burnout worse. Check off tiny things: "drink one glass of water," "walk 10 min." The act of checking restores your sense of agency.</span><span class="ko">번아웃엔 큰 목표가 독이에요. "물 한 컵", "10분 걷기" 같은 작은 것을 체크하면서 성취감을 회복하세요.</span></div><span class="card-tag"><span class="en">Burnout recovery</span><span class="ko">번아웃 회복</span></span></div>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 5. NUTRITION ═══════════ -->
+<div id="nutrition">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 05</p>
+    <h2 class="section-title">🥗 <span class="en">Nutrition & Eating Habits</span><span class="ko">식습관 & 영양 팁</span></h2>
+    <p class="section-subtitle"><span class="en">Practical eating tips for the US — including H-Mart hacks.</span><span class="ko">H마트 꿀팁 포함, 미국에서 실전 영양 관리법.</span></p>
+  </div>
+  <ul class="tip-list">
+    <li><div class="tip-num">1</div><div><div class="tip-title"><span class="en">Use H-Mart frozen side dishes</span><span class="ko">H마트 냉동 반찬 활용</span></div><div class="tip-desc"><span class="en">When you're too tired to cook, H-Mart's frozen section has donkatsu, dumplings, japchae, and doenjang jjigae ingredients — Korean food in 5 minutes. Frozen kimchi too.</span><span class="ko">피곤할 때 H마트 냉동코너의 돈까스, 만두, 잡채, 된장찌개 재료로 5분 만에 한식 해결. 냉동 김치도 있어요.</span></div></div></li>
+    <li><div class="tip-num">2</div><div><div class="tip-title"><span class="en">Buy nuts & eggs in bulk at Costco</span><span class="ko">Costco 견과류·계란 대량 구매</span></div><div class="tip-desc"><span class="en">Costco Mixed Nuts (1.5 kg ~$18) gives you a month of magnesium and protein snacks. Eggs: 24-pack for ~$6. Fatigue recovery starts with protein.</span><span class="ko">Costco Mixed Nuts (1.5kg ~$18)가 한 달치 간식. 계란 24개 ~$6. 피로 회복의 기본은 단백질.</span></div></div></li>
+    <li><div class="tip-num">3</div><div><div class="tip-title"><span class="en">Protein first, carbs last</span><span class="ko">단백질 먼저 먹기</span></div><div class="tip-desc"><span class="en">Eating protein → vegetables → carbohydrates blunts blood sugar spikes. This reduces the post-meal energy crash and afternoon fatigue. US meals tend to be very carb-heavy, so order matters.</span><span class="ko">단백질 → 채소 → 탄수화물 순서로 먹으면 혈당 스파이크가 줄어요. 미국 음식은 탄수화물이 많으니 특히 중요해요.</span></div></div></li>
+
+    <li><div class="tip-num">4</div><div><div class="tip-title"><span class="en">Don't skip meals — quick US options</span><span class="ko">끼니 안 거르기 — 간편 옵션들</span></div><div class="tip-desc"><span class="en">Busy? Trader Joe's frozen fried rice $3, KIND Bar $1.50, Chobani Greek yogurt $1.50. Low blood sugar causes headaches and irritability. Always carry a handful of nuts.</span><span class="ko">바쁠 때: Trader Joe's 냉동 볶음밥 $3, KIND Bar $1.5, Chobani $1.5. 가방에 견과류 항상 갖고 다니세요.</span></div></div></li>
+    <li><div class="tip-num">5</div><div><div class="tip-title"><span class="en">Replenish electrolytes</span><span class="ko">전해질 보충 (Electrolytes)</span></div><div class="tip-desc"><span class="en">US air conditioning and dry climate deplete electrolytes more than you'd expect. A Liquid IV or LMNT packet dissolved in water speeds up recovery. Buy in bulk at Costco to save.</span><span class="ko">건조한 날씨와 에어컨으로 전해질이 빠져요. Liquid IV나 LMNT 패킷 하나를 물에 타면 피로 회복이 빨라요. Costco 대량 구매 추천.</span></div></div></li>
+  </ul>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 6. SHOULDER / NECK ═══════════ -->
+<div id="shoulder" class="section-wrap">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 06</p>
+    <h2 class="section-title">💆 <span class="en">Shoulder & Neck Tension</span><span class="ko">어깨 & 목 뭉침</span></h2>
+    <p class="section-subtitle"><span class="en">Animated stretching guide — these loosen knots fast.</span><span class="ko">뭉친 어깨와 목을 빠르게 푸는 스트레칭 가이드.</span></p>
+  </div>
+  <div class="stretch-grid">
+
+    <!-- SH1: Lateral Neck Stretch -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="172" x2="210" y2="172" stroke="#C8DDE8" stroke-width="2"/>
+          <rect x="86" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="106" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="78" y="84" width="52" height="42" rx="14" fill="#3B82A0"/>
+          <ellipse cx="70" cy="96" rx="16" ry="10" fill="#2C6680"/>
+          <ellipse cx="138" cy="96" rx="16" ry="10" fill="#2C6680"/>
+          <!-- Head tilting right -->
+          <circle id="sh1-head" cx="110" cy="66" r="19" fill="#E8A87C"/>
+          <circle id="sh1-eye" cx="115" cy="63" r="2.5" fill="#c47a4d"/>
+          <!-- Hand on head -->
+          <line x1="138" y1="96" x2="120" y2="70" stroke="#E8A87C" stroke-width="9" stroke-linecap="round"/>
+          <circle cx="120" cy="70" r="7" fill="#E8A87C"/>
+          <!-- Tilt arc -->
+          <path d="M104,48 Q118,46 126,58" stroke="#3B82A0" stroke-width="2" fill="none" stroke-dasharray="5,3" opacity="0.6"/>
+          <!-- Arrow -->
+          <defs><marker id="as1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3B82A0"/></marker></defs>
+          <!-- "ear to shoulder" label -->
+          <text x="145" y="80" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">→ shoulder</text>
+          <text x="110" y="188" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">LATERAL NECK STRETCH</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 01</div>
+        <div class="anim-title"><span class="en">Lateral Neck Stretch</span><span class="ko">목 옆으로 기울이기</span></div>
+        <div class="anim-desc"><span class="en">Tilt your ear toward your shoulder. Place your opposite hand lightly on top of your head for a deeper stretch. Instant relief for neck tightness.</span><span class="ko">귀를 어깨 쪽으로 천천히 기울여요. 반대 손을 머리 위에 살짝 올리면 더 깊이 늘어나요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">20 sec each side × 3</span><span class="ko">좌우 각 20초 × 3회</span></span>
+      </div>
+    </div>
+
+    <!-- SH2: Shoulder Rolls -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="172" x2="210" y2="172" stroke="#C8DDE8" stroke-width="2"/>
+          <rect x="86" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="106" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="78" y="84" width="52" height="42" rx="14" fill="#3B82A0"/>
+          <circle cx="104" cy="66" r="19" fill="#E8A87C"/>
+          <circle cx="99" cy="63" r="2.5" fill="#c47a4d"/>
+          <!-- Rolling shoulders -->
+          <ellipse id="sh2-left" cx="68" cy="92" rx="17" ry="11" fill="#2C6680"/>
+          <ellipse id="sh2-right" cx="140" cy="92" rx="17" ry="11" fill="#2C6680"/>
+          <!-- Circular guides -->
+          <circle cx="68" cy="94" r="20" stroke="#3B82A0" stroke-width="1.5" fill="none" stroke-dasharray="6,4" opacity="0.35"/>
+          <circle cx="140" cy="94" r="20" stroke="#3B82A0" stroke-width="1.5" fill="none" stroke-dasharray="6,4" opacity="0.35"/>
+          <!-- Rotation arrows -->
+          <path d="M56,78 Q48,94 56,110" stroke="#3B82A0" stroke-width="2" fill="none" opacity="0.6" marker-end="url(#as2)"/>
+          <defs><marker id="as2" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#3B82A0"/></marker></defs>
+          <text x="110" y="188" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">SHOULDER ROLLS</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 02</div>
+        <div class="anim-title"><span class="en">Shoulder Rolls</span><span class="ko">어깨 돌리기</span></div>
+        <div class="anim-desc"><span class="en">Roll both shoulders forward → up → back → down in a full circle. Spend more time on the backward roll — that's where the tension lives for desk workers.</span><span class="ko">양 어깨를 앞→위→뒤→아래 순으로 크게 돌려요. 뒤쪽으로 돌릴 때 더 오래 머물면 잘 풀려요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">10 reps each direction</span><span class="ko">앞뒤 각 10회</span></span>
+      </div>
+    </div>
+
+    <!-- SH3: Cross-body arm -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="172" x2="210" y2="172" stroke="#C8DDE8" stroke-width="2"/>
+          <rect x="86" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="106" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="78" y="84" width="52" height="42" rx="14" fill="#3B82A0"/>
+          <circle cx="104" cy="66" r="19" fill="#E8A87C"/>
+          <circle cx="99" cy="63" r="2.5" fill="#c47a4d"/>
+          <!-- Right arm crossing to left -->
+          <line id="sh3-arm" x1="126" y1="100" x2="60" y2="100" stroke="#E8A87C" stroke-width="11" stroke-linecap="round"/>
+          <!-- Left forearm pressing it -->
+          <line x1="64" y1="100" x2="60" y2="72" stroke="#3B82A0" stroke-width="10" stroke-linecap="round"/>
+          <circle cx="60" cy="72" r="8" fill="#3B82A0"/>
+          <!-- Press arrow -->
+          <defs><marker id="as3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2C6680"/></marker></defs>
+          <line x1="50" y1="100" x2="38" y2="100" stroke="#2C6680" stroke-width="2.5" stroke-linecap="round" marker-end="url(#as3)"/>
+          <text x="28" y="96" font-size="9" fill="#2C6680" font-family="Inter" font-weight="600">pull</text>
+          <text x="110" y="188" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">CROSS-BODY ARM STRETCH</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 03</div>
+        <div class="anim-title"><span class="en">Cross-Body Arm Stretch</span><span class="ko">팔 가슴 앞으로 당기기</span></div>
+        <div class="anim-desc"><span class="en">Extend one arm across your chest, use the other forearm to press it toward you. Releases the rear shoulder and rotator cuff.</span><span class="ko">팔을 가슴 앞으로 뻗고 반대 팔로 눌러 당겨요. 어깨 뒤쪽과 회전근개가 풀려요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">20 sec each side × 2</span><span class="ko">좌우 각 20초 × 2회</span></span>
+      </div>
+    </div>
+
+    <!-- SH4: Chin Tuck -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="172" x2="210" y2="172" stroke="#C8DDE8" stroke-width="2"/>
+          <rect x="86" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="106" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="78" y="84" width="52" height="42" rx="14" fill="#3B82A0"/>
+          <ellipse cx="70" cy="96" rx="16" ry="10" fill="#2C6680"/>
+          <ellipse cx="138" cy="96" rx="16" ry="10" fill="#2C6680"/>
+          <!-- Ghost head (forward/bad position) -->
+          <circle cx="116" cy="64" r="19" stroke="#3B82A0" stroke-width="2" fill="none" stroke-dasharray="5,4" opacity="0.35"/>
+          <text x="138" y="58" font-size="8" fill="#3B82A0" font-family="Inter" opacity="0.6">bad posture</text>
+          <!-- Animated head (correct, tucked back) -->
+          <circle id="sh4-head" cx="102" cy="64" r="19" fill="#E8A87C"/>
+          <circle id="sh4-eye" cx="97" cy="61" r="2.5" fill="#c47a4d"/>
+          <!-- Tuck arrow -->
+          <defs><marker id="as4" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3B82A0"/></marker></defs>
+          <line x1="116" y1="64" x2="104" y2="64" stroke="#3B82A0" stroke-width="2.5" stroke-linecap="round" marker-end="url(#as4)"/>
+          <text x="60" y="90" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">tuck back ←</text>
+          <text x="110" y="188" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">CHIN TUCK — FORWARD HEAD FIX</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 04</div>
+        <div class="anim-title"><span class="en">Chin Tuck (forward head fix)</span><span class="ko">턱 당기기 (거북목 교정)</span></div>
+        <div class="anim-desc"><span class="en">Eyes level, pull your chin straight back to make a "double chin." Hold 5 seconds. The dashed outline shows the forward drift — this pulls it back to neutral.</span><span class="ko">시선은 정면, 턱을 뒤로 당겨 이중턱 느낌으로 5초 유지. 스마트폰·컴퓨터로 앞으로 쏠린 목을 교정해요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">10 reps</span><span class="ko">10회 반복</span></span>
+      </div>
+    </div>
+
+    <!-- SH5: Doorframe Chest Opener -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="18" width="14" height="168" rx="5" fill="#CBD5E1"/>
+          <rect x="198" y="18" width="14" height="168" rx="5" fill="#CBD5E1"/>
+          <rect x="8" y="18" width="204" height="14" rx="5" fill="#CBD5E1"/>
+          <rect x="86" y="110" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="106" y="114" width="16" height="46" rx="8" fill="#2C6680" transform="rotate(7,114,114)"/>
+          <rect x="78" y="68" width="52" height="46" rx="14" fill="#3B82A0"/>
+          <circle cx="104" cy="52" r="19" fill="#E8A87C"/>
+          <circle cx="99" cy="49" r="2.5" fill="#c47a4d"/>
+          <!-- Arms on doorframe, animated -->
+          <line id="sh5-arm-l" x1="80" y1="82" x2="22" y2="70" stroke="#E8A87C" stroke-width="11" stroke-linecap="round"/>
+          <line id="sh5-arm-r" x1="128" y1="82" x2="198" y2="70" stroke="#E8A87C" stroke-width="11" stroke-linecap="round"/>
+          <!-- Chest opening arrow -->
+          <defs><marker id="as5" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3B82A0"/></marker></defs>
+          <line x1="104" y1="88" x2="104" y2="72" stroke="#3B82A0" stroke-width="2.5" stroke-linecap="round" marker-end="url(#as5)"/>
+          <text x="118" y="68" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">chest open!</text>
+          <text x="110" y="188" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">DOORFRAME CHEST OPENER</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 05</div>
+        <div class="anim-title"><span class="en">Doorframe Chest Opener</span><span class="ko">문틀 이용 가슴 열기</span></div>
+        <div class="anim-desc"><span class="en">Place both arms on the door frame at shoulder height and step one foot forward, leaning your chest through. Opens up the pec muscles tightened by desk work.</span><span class="ko">문틀 양쪽에 팔을 올리고 한 발을 앞으로 내딛으며 가슴을 앞으로 밀어요. 구부정한 자세로 굳은 가슴을 열어줘요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">20–30 sec × 2</span><span class="ko">20~30초 × 2회</span></span>
+      </div>
+    </div>
+
+    <!-- SH6: Interlaced back stretch -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 220 195" width="220" height="195" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="172" x2="210" y2="172" stroke="#C8DDE8" stroke-width="2"/>
+          <rect x="86" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <rect x="106" y="122" width="16" height="50" rx="8" fill="#2C6680"/>
+          <!-- Rounded back (forward hunch) -->
+          <path d="M78" style="display:none"/>
+          <path d="M76,114 Q104,88 132,114" stroke="#3B82A0" stroke-width="30" fill="none" stroke-linecap="round"/>
+          <circle cx="104" cy="74" r="18" fill="#E8A87C"/>
+          <circle cx="104" cy="80" r="2.5" fill="#c47a4d"/>
+          <!-- Interlaced arms stretched forward -->
+          <path id="sh6-arms" d="M72,110 Q104,124 136,110" stroke="#E8A87C" stroke-width="11" fill="none" stroke-linecap="round"/>
+          <circle cx="104" cy="124" r="9" fill="#E8A87C"/>
+          <!-- Forward arrow -->
+          <defs><marker id="as6" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#3B82A0"/></marker></defs>
+          <line x1="104" y1="134" x2="104" y2="148" stroke="#3B82A0" stroke-width="2.5" stroke-linecap="round" marker-end="url(#as6)"/>
+          <text x="118" y="152" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">reach forward</text>
+          <text x="110" y="188" text-anchor="middle" font-size="10" fill="#2C6680" font-family="Inter" font-weight="700">INTERLACED BACK STRETCH</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Stretch 06</div>
+        <div class="anim-title"><span class="en">Interlaced Fingers Back Stretch</span><span class="ko">손 깍지 끼고 등 늘리기</span></div>
+        <div class="anim-desc"><span class="en">Interlace your fingers, extend both arms forward and round your upper back. You'll feel the stretch between your shoulder blades. Works sitting or standing.</span><span class="ko">양손 깍지를 끼고 앞으로 쭉 뻗으며 등을 둥글게 말아요. 어깨 사이와 등 위쪽이 시원하게 늘어나요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">15–20 sec × 3</span><span class="ko">15~20초 × 3회</span></span>
+      </div>
+    </div>
+
+  </div>
+  <div class="us-tip">
+    <p class="us-tip-title">🇺🇸 <span class="en">What you can use for shoulder & neck pain in the US</span><span class="ko">미국에서 어깨·목에 쓸 수 있는 것들</span></p>
+    <p class="us-tip-body">
+      <span class="en"><b>Tiger Balm</b> (H-Mart/CVS ~$7) — Similar to Korean patches, great for muscle pain.<br/><b>Massage gun</b> (Amazon ~$30–50) — Renpho or Theragun entry models. 2–3 minutes on the shoulder/neck after work makes a real difference.<br/><b>Foam roller</b> (Target ~$15–25) — Rolling your upper back releases the thoracic fascia.</span>
+      <span class="ko"><b>Tiger Balm</b> (H마트/CVS ~$7) — 한국 파스 느낌. 근육통에 바르면 시원해요.<br/><b>Massage Gun</b> (Amazon ~$30~50) — Renpho, Theragun 보급형. 퇴근 후 2~3분만 써도 달라요.<br/><b>Foam Roller</b> (Target ~$15~25) — 등을 대고 굴리면 등 근막 이완 효과.</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 7. WRIST / FEET ═══════════ -->
+<div id="wrist">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 07</p>
+    <h2 class="section-title">🖐️ <span class="en">Wrist & Foot Fatigue</span><span class="ko">손목 & 발 피로</span></h2>
+    <p class="section-subtitle"><span class="en">Relief for hands and feet that bear the brunt of physical work.</span><span class="ko">육체 노동의 부담을 받는 손과 발을 위한 관리법.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🔄</div><div class="card-title"><span class="en">Wrist rotations</span><span class="ko">손목 돌리기</span></div><div class="card-desc"><span class="en">Slowly rotate both wrists clockwise and counterclockwise 10 times each. The fastest way to release wrist tendons after repetitive work or typing.</span><span class="ko">양 손목을 시계·반시계 방향으로 10회씩 천천히 돌려요. 반복 노동이나 컴퓨터 작업 후 가장 빠른 방법.</span></div><span class="card-tag"><span class="en">Instant</span><span class="ko">즉시 가능</span></span></div>
+    <div class="card"><div class="card-icon">🤲</div><div class="card-title"><span class="en">Wrist flexion/extension stretch</span><span class="ko">손목 스트레칭 (앞뒤)</span></div><div class="card-desc"><span class="en">Extend your arm, pull fingers up with the other hand (flexion), then pull them down (extension). Releases both sides of the wrist muscles.</span><span class="ko">팔을 앞으로 뻗고 손가락을 위로, 다음엔 아래로 당겨요. 손목 앞뒤 근육을 모두 풀어줘요.</span></div><span class="card-tag"><span class="en">Wrist pain</span><span class="ko">손목 통증</span></span></div>
+    <div class="card"><div class="card-icon">🧤</div><div class="card-title"><span class="en">Wrist brace / support</span><span class="ko">손목 보호대 착용</span></div><div class="card-desc"><span class="en">Mueller Wrist Brace on Amazon ($10–15). Prevents the wrist from bending during sleep, reducing morning hand numbness for repetitive-work jobs.</span><span class="ko">Amazon에서 Mueller Wrist Brace $10~15. 취침 중 손목이 꺾이지 않게 잡아줘서 아침에 손 저림을 줄여줘요.</span></div><span class="usa-badge">🇺🇸 Amazon / CVS</span></div>
+    <div class="card"><div class="card-icon">🦶</div><div class="card-title"><span class="en">Calf raises</span><span class="ko">발뒤꿈치 들었다 내리기</span></div><div class="card-desc"><span class="en">Stand and repeatedly raise your heels and lower them. The calf pump action restores lower-body circulation quickly. You can do this while washing dishes.</span><span class="ko">발뒤꿈치를 들었다 내리기 반복. 종아리 근육 수축·이완으로 하체 혈액순환을 빠르게 회복시켜요.</span></div><span class="card-tag"><span class="en">Circulation</span><span class="ko">혈액순환</span></span></div>
+    <div class="card"><div class="card-icon">⚽</div><div class="card-title"><span class="en">Foot roller massage</span><span class="ko">발바닥 공 굴리기 마사지</span></div><div class="card-desc"><span class="en">Place a tennis ball under your foot and roll it forward and back. Get a lacrosse ball at Target for $3–5. Especially effective for people who stand all day.</span><span class="ko">테니스공을 발바닥 아래 두고 앞뒤로 굴려요. Target에서 Lacrosse Ball $3~5. 오래 서 있는 분들께 특히 효과적.</span></div><span class="usa-badge">🇺🇸 Target</span></div>
+    <div class="card"><div class="card-icon">🧦</div><div class="card-title"><span class="en">Legs-up-the-wall</span><span class="ko">다리 벽에 올리고 쉬기</span></div><div class="card-desc"><span class="en">Lie on the floor and rest your legs vertically against a wall for 10–15 min. Gravity drains blood that pools in the legs. Highly recommended for jobs with long standing hours.</span><span class="ko">누워서 다리를 벽에 수직으로 올려 10~15분. 중력을 이용해 다리에 몰린 혈액을 순환시켜요.</span></div><span class="card-tag"><span class="en">Swelling relief</span><span class="ko">부종 해소</span></span></div>
+    <div class="card"><div class="card-icon">👟</div><div class="card-title"><span class="en">Replace insoles</span><span class="ko">깔창 교체하기</span></div><div class="card-desc"><span class="en">US shoes lose cushioning fast. Dr. Scholl's insoles at Walmart (~$10–15) reduce foot and back fatigue significantly. Essential if you're on your feet all day.</span><span class="ko">미국 신발은 쿠션이 빨리 꺼져요. Dr. Scholl's 깔창 (Walmart ~$10~15)으로 교체하면 발·허리 피로가 줄어요.</span></div><span class="usa-badge">🇺🇸 Walmart / Target</span></div>
+    <div class="card"><div class="card-icon">💊</div><div class="card-title"><span class="en">Hand squeeze & spread</span><span class="ko">손 쥐었다 펴기</span></div><div class="card-desc"><span class="en">Squeeze your hand tight, then spread all fingers as wide as possible. Repeat 10 times. Releases tightened hand muscles and improves circulation in the fingers.</span><span class="ko">손을 꽉 쥐었다가 손가락을 최대한 벌리며 펴기를 10회 반복. 뭉친 손 근육을 풀고 혈액순환을 개선해요.</span></div><span class="card-tag"><span class="en">Hand fatigue</span><span class="ko">손 피로</span></span></div>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 8. EXERCISE ROUTINE ═══════════ -->
+<div id="exercise" class="section-wrap">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 08</p>
+    <h2 class="section-title">🏃 <span class="en">Daily Exercise Routine</span><span class="ko">일상 운동 루틴</span></h2>
+    <p class="section-subtitle"><span class="en">No gym needed. These routines work in any apartment or small space.</span><span class="ko">헬스장 없어도 OK. 어느 집에서나 할 수 있는 루틴들.</span></p>
+  </div>
+  <div class="stretch-grid">
+
+    <!-- MORNING ROUTINE -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 200 190" width="200" height="190" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sun rising -->
+          <circle cx="165" cy="32" r="18" fill="#FCD34D" opacity="0.7"/>
+          <line x1="165" y1="8" x2="165" y2="2" stroke="#FCD34D" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="181" y1="16" x2="186" y2="11" stroke="#FCD34D" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="188" y1="32" x2="194" y2="32" stroke="#FCD34D" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Person doing jumping jack -->
+          <line x1="10" y1="168" x2="190" y2="168" stroke="#C8DDE8" stroke-width="2"/>
+          <rect x="90" y="108" width="20" height="48" rx="10" fill="#2C6680"/>
+          <rect x="78" y="70" width="44" height="40" rx="12" fill="#3B82A0"/>
+          <circle cx="100" cy="54" r="18" fill="#E8A87C"/>
+          <circle cx="94" cy="51" r="2.5" fill="#c47a4d"/>
+          <!-- Arms raised wide for jumping jack -->
+          <line id="ex1-arm-l" x1="80" y1="82" x2="50" y2="55" stroke="#E8A87C" stroke-width="10" stroke-linecap="round"/>
+          <line id="ex1-arm-r" x1="120" y1="82" x2="150" y2="55" stroke="#E8A87C" stroke-width="10" stroke-linecap="round"/>
+          <!-- Legs spread -->
+          <line id="ex1-leg-l" x1="90" y1="152" x2="70" y2="168" stroke="#2C6680" stroke-width="12" stroke-linecap="round"/>
+          <line id="ex1-leg-r" x1="110" y1="152" x2="130" y2="168" stroke="#2C6680" stroke-width="12" stroke-linecap="round"/>
+          <text x="100" y="185" text-anchor="middle" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">5-MIN MORNING WAKE-UP</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Routine 01</div>
+        <div class="anim-title"><span class="en">5-Min Morning Wake-Up</span><span class="ko">5분 아침 기상 루틴</span></div>
+        <div class="anim-desc"><span class="en">20 jumping jacks → 10 arm circles → 10 neck rolls → 10 ankle rotations. Gets blood flowing before the day starts. No equipment, no space required.</span><span class="ko">점핑잭 20개 → 팔 돌리기 10회 → 목 돌리기 10회 → 발목 돌리기 10회. 아침에 피를 돌게 해줘요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">5 min every morning</span><span class="ko">매일 아침 5분</span></span>
+      </div>
+    </div>
+
+    <!-- DESK WORKOUT -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 200 190" width="200" height="190" xmlns="http://www.w3.org/2000/svg">
+          <!-- Desk -->
+          <rect x="20" y="110" width="160" height="10" rx="4" fill="#CBD5E1"/>
+          <rect x="28" y="120" width="8" height="45" rx="4" fill="#CBD5E1"/>
+          <rect x="164" y="120" width="8" height="45" rx="4" fill="#CBD5E1"/>
+          <!-- Chair -->
+          <rect x="68" y="118" width="64" height="8" rx="4" fill="#A0B4C0"/>
+          <rect x="130" y="84" width="8" height="40" rx="3" fill="#A0B4C0"/>
+          <!-- Person seated -->
+          <rect x="80" y="75" width="40" height="36" rx="10" fill="#3B82A0"/>
+          <circle cx="100" cy="60" r="17" fill="#E8A87C"/>
+          <circle cx="94" cy="57" r="2.5" fill="#c47a4d"/>
+          <!-- Arms pressing desk -->
+          <line x1="80" y1="95" x2="60" y2="110" stroke="#E8A87C" stroke-width="9" stroke-linecap="round"/>
+          <line x1="120" y1="95" x2="140" y2="110" stroke="#E8A87C" stroke-width="9" stroke-linecap="round"/>
+          <!-- Legs under desk doing raises -->
+          <rect x="82" y="118" width="14" height="32" rx="7" fill="#2C6680"/>
+          <rect id="ex2-leg" x="104" y="118" width="14" height="32" rx="7" fill="#2C6680" transform="rotate(-15,111,118)"/>
+          <text x="100" y="185" text-anchor="middle" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">DESK WORKOUT (NO STANDING)</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Routine 02</div>
+        <div class="anim-title"><span class="en">Desk Workout (no standing)</span><span class="ko">앉아서 하는 책상 운동</span></div>
+        <div class="anim-desc"><span class="en">Seated leg raises × 20, desk push-ups × 10, calf raises × 20, seated torso twist × 10 each side. Fits into any work break without leaving your chair.</span><span class="ko">앉아서 다리 올리기 20회, 책상 푸시업 10회, 종아리 들기 20회, 몸통 비틀기 10회. 자리를 안 떠도 돼요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">10 min per break</span><span class="ko">휴식 시간마다 10분</span></span>
+      </div>
+    </div>
+
+    <!-- EVENING WALK -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 200 190" width="200" height="190" xmlns="http://www.w3.org/2000/svg">
+          <!-- Moon & stars for evening -->
+          <path d="M162,28 Q175,20 175,36 Q160,42 152,32 Q155,22 162,28Z" fill="#FCD34D" opacity="0.7"/>
+          <circle cx="140" cy="20" r="2" fill="#FCD34D" opacity="0.6"/>
+          <circle cx="185" cy="30" r="1.5" fill="#FCD34D" opacity="0.5"/>
+          <!-- Ground / sidewalk -->
+          <line x1="10" y1="165" x2="190" y2="165" stroke="#C8DDE8" stroke-width="2"/>
+          <rect x="10" y="165" width="180" height="18" rx="2" fill="#E9ECEF" opacity="0.5"/>
+          <!-- Walking person -->
+          <circle cx="100" cy="52" r="18" fill="#E8A87C"/>
+          <circle cx="94" cy="49" r="2.5" fill="#c47a4d"/>
+          <rect x="82" y="68" width="36" height="42" rx="10" fill="#3B82A0"/>
+          <!-- Walking arms opposite to legs -->
+          <line id="ex3-arm-l" x1="84" y1="78" x2="60" y2="98" stroke="#E8A87C" stroke-width="9" stroke-linecap="round"/>
+          <line id="ex3-arm-r" x1="116" y1="78" x2="138" y2="62" stroke="#E8A87C" stroke-width="9" stroke-linecap="round"/>
+          <!-- Walking legs -->
+          <line id="ex3-leg-l" x1="92" y1="108" x2="75" y2="148" stroke="#2C6680" stroke-width="12" stroke-linecap="round"/>
+          <line id="ex3-leg-r" x1="108" y1="108" x2="125" y2="132" stroke="#2C6680" stroke-width="12" stroke-linecap="round"/>
+          <!-- Motion dots -->
+          <circle cx="62" cy="120" r="3" fill="#3B82A0" opacity="0.3"/>
+          <circle cx="54" cy="120" r="2" fill="#3B82A0" opacity="0.2"/>
+          <circle cx="46" cy="120" r="1.5" fill="#3B82A0" opacity="0.1"/>
+          <text x="100" y="185" text-anchor="middle" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">EVENING WALK — 20 MIN</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Routine 03</div>
+        <div class="anim-title"><span class="en">Evening Walk (20 min)</span><span class="ko">저녁 산책 20분</span></div>
+        <div class="anim-desc"><span class="en">A brisk 20-min walk after dinner lowers blood sugar, aids digestion, and winds down the nervous system. US neighborhoods are generally very walkable — search "park near me."</span><span class="ko">저녁 식사 후 빠른 걸음 20분은 혈당 낮추기, 소화 돕기, 신경계 이완에 효과적. "park near me" 검색.</span></div>
+        <span class="anim-duration">⏱ <span class="en">20 min after dinner</span><span class="ko">저녁 식사 후 20분</span></span>
+      </div>
+    </div>
+
+    <!-- BODYWEIGHT ROUTINE -->
+    <div class="anim-card">
+      <div class="anim-stage">
+        <svg viewBox="0 0 200 190" width="200" height="190" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="168" x2="190" y2="168" stroke="#C8DDE8" stroke-width="2"/>
+          <!-- Person doing squat -->
+          <!-- Torso leaning slightly forward -->
+          <rect x="80" y="88" width="40" height="38" rx="10" fill="#3B82A0" transform="rotate(-8,100,100)"/>
+          <circle cx="100" cy="72" r="17" fill="#E8A87C"/>
+          <circle cx="95" cy="69" r="2.5" fill="#c47a4d"/>
+          <!-- Arms out front for balance -->
+          <line x1="80" y1="100" x2="52" y2="92" stroke="#E8A87C" stroke-width="9" stroke-linecap="round"/>
+          <line x1="120" y1="100" x2="148" y2="92" stroke="#E8A87C" stroke-width="9" stroke-linecap="round"/>
+          <!-- Bent knees / squat legs -->
+          <line x1="90" y1="124" x2="74" y2="152" stroke="#2C6680" stroke-width="13" stroke-linecap="round"/>
+          <line x1="110" y1="124" x2="126" y2="152" stroke="#2C6680" stroke-width="13" stroke-linecap="round"/>
+          <!-- Feet -->
+          <ellipse cx="70" cy="158" rx="12" ry="6" fill="#2C6680"/>
+          <ellipse cx="130" cy="158" rx="12" ry="6" fill="#2C6680"/>
+          <text x="100" y="185" text-anchor="middle" font-size="9" fill="#3B82A0" font-family="Inter" font-weight="600">BODYWEIGHT SQUAT</text>
+        </svg>
+      </div>
+      <div class="anim-info">
+        <div class="anim-badge">Routine 04</div>
+        <div class="anim-title"><span class="en">10-Min Bodyweight Circuit</span><span class="ko">10분 맨몸 운동 서킷</span></div>
+        <div class="anim-desc"><span class="en">Squats × 15, push-ups × 10, lunges × 10 each, plank 30 sec. Repeat twice. Builds overall strength with zero equipment and very little space. Great before or after a shower.</span><span class="ko">스쿼트 15개, 푸시업 10개, 런지 각 10개, 플랭크 30초. 2세트 반복. 장비 없이 어디서나 가능해요.</span></div>
+        <span class="anim-duration">⏱ <span class="en">10 min, 3×/week</span><span class="ko">10분, 주 3회</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="us-tip">
+    <p class="us-tip-title">🇺🇸 <span class="en">Free & cheap exercise resources in the US</span><span class="ko">미국에서 무료·저렴한 운동 자원</span></p>
+    <p class="us-tip-body">
+      <span class="en"><b>YouTube</b> — "Korean workout" or "apartment workout no jumping" for quiet routines neighbors won't complain about.<br/><b>Planet Fitness</b> — $10/month, 24-hour access, showers included. Best value gym in the US.<br/><b>Nike Run Club / Strava</b> — Free running apps with guided runs. Great motivation for evening walks.<br/><b>Resistance bands</b> (Amazon ~$10–15) — Full body workout in a tiny bag. Great for travel too.</span>
+      <span class="ko"><b>YouTube</b> — "아파트 운동 층간소음 없는" 검색하면 조용한 루틴들 있어요.<br/><b>Planet Fitness</b> — 월 $10, 24시간 이용, 샤워 가능. 미국에서 가장 가성비 좋은 헬스장.<br/><b>Nike Run Club / Strava</b> — 무료 러닝 앱. 저녁 산책 동기부여에 좋아요.<br/><b>저항 밴드</b> (Amazon ~$10~15) — 작은 가방 하나로 전신 운동. 여행 때도 유용해요.</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 9. HYDRATION ═══════════ -->
+<div id="hydration">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 09</p>
+    <h2 class="section-title">💧 <span class="en">Hydration</span><span class="ko">수분 보충</span></h2>
+    <p class="section-subtitle"><span class="en">The US is drier than most of Korea — you need more water than you think.</span><span class="ko">미국은 한국보다 훨씬 건조해요. 생각보다 더 많이 마셔야 해요.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🥤</div><div class="card-title"><span class="en">8 glasses a day — set reminders</span><span class="ko">하루 8잔 — 알림 설정</span></div><div class="card-desc"><span class="en">Set hourly phone reminders or use the free app "Water Reminder" to track intake. Dark yellow urine means you're behind on water — target pale yellow.</span><span class="ko">시간별 알림을 설정하거나 "Water Reminder" 앱을 써요. 소변 색이 진노랑이면 수분 부족 신호예요.</span></div><span class="card-tag"><span class="en">Daily habit</span><span class="ko">일상 습관</span></span></div>
+    <div class="card"><div class="card-icon">🫖</div><div class="card-title"><span class="en">Barley tea (보리차) as default drink</span><span class="ko">보리차를 기본 음료로</span></div><div class="card-desc"><span class="en">H-Mart sells barley tea bags. Brew a big pitcher and keep it in the fridge — a Korean habit that works great in the US. No caffeine, rich in antioxidants, great hot or cold.</span><span class="ko">H마트에서 보리차 티백 구입. 냉장고에 한 통 만들어두면 카페인 없이 수분 보충이 돼요.</span></div><span class="card-tag"><span class="en">H-Mart</span><span class="ko">H마트</span></span></div>
+    <div class="card"><div class="card-icon">⚡</div><div class="card-title"><span class="en">Electrolyte packets</span><span class="ko">전해질 패킷</span></div><div class="card-desc"><span class="en">Liquid IV or LMNT mixed into water replaces what AC and dry air remove. Buy at Costco in bulk for the best price. Especially useful after long work shifts.</span><span class="ko">Liquid IV나 LMNT를 물에 타면 에어컨과 건조한 공기로 빠진 전해질을 보충해요. Costco 대량 구매 추천.</span></div><span class="usa-badge">🇺🇸 Costco / Target</span></div>
+    <div class="card"><div class="card-icon">🫙</div><div class="card-title"><span class="en">Keep a big water bottle at work</span><span class="ko">직장에 큰 물병 두기</span></div><div class="card-desc"><span class="en">A 32 oz (1L) bottle fills your daily needs in just 2 refills. Hydro Flask and Nalgene bottles at Target keep water cold for hours. Seeing it on your desk is a passive reminder.</span><span class="ko">32 oz (1L) 물병 두 번이면 하루치. Target의 Hydro Flask는 오래 차갑게 유지돼요. 눈에 보이면 자연히 마시게 돼요.</span></div><span class="card-tag"><span class="en">Visual cue</span><span class="ko">시각적 알림</span></span></div>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 10. POSTURE ═══════════ -->
+<div id="posture" class="section-wrap">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 10</p>
+    <h2 class="section-title">🪑 <span class="en">Posture Correction</span><span class="ko">자세 교정</span></h2>
+    <p class="section-subtitle"><span class="en">Most work-related pain starts here. Fix the root cause.</span><span class="ko">대부분의 직업병은 여기서 시작돼요. 근본 원인을 고쳐봐요.</span></p>
+  </div>
+  <ul class="tip-list">
+    <li><div class="tip-num">1</div><div><div class="tip-title"><span class="en">Monitor at eye level</span><span class="ko">모니터 눈높이에 맞추기</span></div><div class="tip-desc"><span class="en">The top of your screen should be at or slightly below eye level. Stack books under your monitor, or get a riser on Amazon (~$20). This alone fixes most neck strain.</span><span class="ko">화면 상단이 눈 높이와 같거나 약간 아래에 있어야 해요. 책을 받치거나 Amazon에서 모니터 받침대 ~$20 구입.</span></div></div></li>
+    <li><div class="tip-num">2</div><div><div class="tip-title"><span class="en">Sit with hips at 90°, feet flat</span><span class="ko">엉덩이 90도, 발 바닥에 닿게</span></div><div class="tip-desc"><span class="en">Hips and knees should form 90-degree angles, feet flat on the floor. Adjust your chair height. If the chair is too high, put something flat under your feet.</span><span class="ko">엉덩이와 무릎이 90도, 발이 바닥에 닿아야 해요. 의자 높이를 조절하고, 높으면 발아래 뭔가 받쳐두세요.</span></div></div></li>
+    <li><div class="tip-num">3</div><div><div class="tip-title"><span class="en">Lumbar support cushion</span><span class="ko">요추 지지 쿠션</span></div><div class="tip-desc"><span class="en">A small rolled towel or lumbar cushion placed at the small of your back maintains the natural spine curve. Amazon has Everlasting Comfort and ComfiLife brands for ~$20–30.</span><span class="ko">작은 수건이나 요추 쿠션을 허리 뒤에 대면 척추의 자연스러운 곡선을 유지할 수 있어요. Amazon ~$20~30.</span></div></div></li>
+    <li><div class="tip-num">4</div><div><div class="tip-title"><span class="en">Stand up every 30–45 min</span><span class="ko">30~45분마다 일어서기</span></div><div class="tip-desc"><span class="en">Set a recurring timer. Even standing for 2 minutes resets spinal pressure. Walk to the water cooler, stretch in place — anything that gets you vertical.</span><span class="ko">타이머를 반복 설정하세요. 2분만 서 있어도 척추 압력이 재설정돼요. 정수기 다녀오기, 그냥 서서 기지개라도.</span></div></div></li>
+    <li><div class="tip-num">5</div><div><div class="tip-title"><span class="en">Phone at eye level, not lap-level</span><span class="ko">폰을 눈 높이로 들기</span></div><div class="tip-desc"><span class="en">Holding your phone down low forces your neck into a 45–60° bend, adding 40–60 lbs of equivalent stress. Even raising your arm just a little makes a significant difference.</span><span class="ko">폰을 아래로 보면 목이 45~60도 굽어 40~60파운드의 압력이 더 생겨요. 조금만 올려도 크게 달라져요.</span></div></div></li>
+  </ul>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 11. IMMUNITY ═══════════ -->
+<div id="immunity">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 11</p>
+    <h2 class="section-title">🛡️ <span class="en">Immunity Boost</span><span class="ko">면역력 강화</span></h2>
+    <p class="section-subtitle"><span class="en">Especially important in a new country with different germs and stress.</span><span class="ko">다른 환경과 새로운 세균에 노출되는 이민 생활에서 특히 중요해요.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">😴</div><div class="card-title"><span class="en">7–8 hours of sleep is non-negotiable</span><span class="ko">수면 7~8시간은 필수</span></div><div class="card-desc"><span class="en">Sleep is the most powerful immune booster. Even one night under 6 hours makes you significantly more vulnerable to infection. Protect your sleep like a health appointment.</span><span class="ko">수면이 가장 강력한 면역 부스터예요. 6시간 미만 하룻밤만으로도 감염 취약성이 크게 높아져요.</span></div><span class="card-tag"><span class="en">Non-negotiable</span><span class="ko">필수</span></span></div>
+    <div class="card"><div class="card-icon">🚿</div><div class="card-title"><span class="en">Hand washing protocol</span><span class="ko">손 씻기 습관</span></div><div class="card-desc"><span class="en">Wash for 20 seconds (sing "Happy Birthday" twice). Before eating, after touching public surfaces. US offices rarely have bidets — hand hygiene matters more here.</span><span class="ko">"Happy Birthday" 두 번 부를 만큼 (20초) 씻어요. 식사 전, 공공장소 접촉 후. 미국에서는 특히 중요해요.</span></div><span class="card-tag"><span class="en">Basic but powerful</span><span class="ko">기본이 최선</span></span></div>
+    <div class="card"><div class="card-icon">🍵</div><div class="card-title"><span class="en">Green tea or ginger tea daily</span><span class="ko">녹차 또는 생강차 매일</span></div><div class="card-desc"><span class="en">H-Mart has Korean green tea and ginger tea bags. Both contain immune-supporting antioxidants and anti-inflammatory compounds. Replace one coffee per day with tea.</span><span class="ko">H마트에서 한국산 녹차와 생강차. 항산화 물질과 항염 성분이 면역 지지에 도움돼요. 커피 한 잔을 차로 대체해보세요.</span></div><span class="card-tag"><span class="en">H-Mart</span><span class="ko">H마트</span></span></div>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 12. DIGESTION ═══════════ -->
+<div id="digestion" class="section-wrap">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 12</p>
+    <h2 class="section-title">🫃 <span class="en">Digestion</span><span class="ko">소화 불량</span></h2>
+    <p class="section-subtitle"><span class="en">US food is heavier — your gut needs some support adjusting.</span><span class="ko">미국 음식은 더 무거워요. 소화 기관이 적응하는 데 도움을 줘요.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🥬</div><div class="card-title"><span class="en">Probiotics daily</span><span class="ko">프로바이오틱스 매일</span></div><div class="card-desc"><span class="en">Culturelle or Align at CVS/Costco (~$20–30/month). The gut microbiome shifts when you move countries — probiotics help stabilize it and reduce bloating.</span><span class="ko">CVS/Costco에서 Culturelle 또는 Align ~$20~30/월. 나라를 옮기면 장내 미생물이 변해요. 프로바이오틱스가 안정화에 도움돼요.</span></div><span class="card-tag"><span class="en">Daily</span><span class="ko">매일</span></span></div>
+    <div class="card"><div class="card-icon">🍚</div><div class="card-title"><span class="en">Eat kimchi regularly</span><span class="ko">김치 꾸준히 먹기</span></div><div class="card-desc"><span class="en">Kimchi is a natural probiotic. Available at H-Mart in many varieties — fresh, aged, vegan. Eating it regularly supports gut health and reduces the bloating common when adjusting to US food.</span><span class="ko">김치는 자연 프로바이오틱스예요. H마트에서 다양한 종류 구입 가능. 미국 음식 적응 중 장 건강 유지에 효과적.</span></div><span class="card-tag"><span class="en">H-Mart</span><span class="ko">H마트</span></span></div>
+    <div class="card"><div class="card-icon">🚰</div><div class="card-title"><span class="en">Drink water before meals</span><span class="ko">식사 전 물 마시기</span></div><div class="card-desc"><span class="en">One glass of water 20–30 minutes before eating helps the stomach prepare digestive juices and prevents overeating, which is easy to do with large US portion sizes.</span><span class="ko">식사 20~30분 전 물 한 잔이 소화를 준비시켜요. 미국 음식의 큰 양을 더 잘 조절할 수 있어요.</span></div><span class="card-tag"><span class="en">Pre-meal habit</span><span class="ko">식전 습관</span></span></div>
+    <div class="card"><div class="card-icon">🚶</div><div class="card-title"><span class="en">Walk after eating</span><span class="ko">밥 먹고 10분 걷기</span></div><div class="card-desc"><span class="en">Even a 10-minute walk after a meal reduces blood sugar spikes by up to 30% and stimulates peristalsis (the movement that pushes food through your gut).</span><span class="ko">식후 10분 걷기는 혈당 스파이크를 30%까지 줄이고 장의 연동 운동을 자극해요.</span></div><span class="card-tag"><span class="en">After every meal</span><span class="ko">매 식사 후</span></span></div>
+    <div class="card"><div class="card-icon">🥣</div><div class="card-title"><span class="en">More fiber — US diet is low in it</span><span class="ko">식이섬유 늘리기</span></div><div class="card-desc"><span class="en">US restaurant food is often fiber-poor. Add a banana, apple, or Trader Joe's frozen vegetables to each meal. Fiber helps digestion and reduces the constipation common when moving to the US.</span><span class="ko">미국 식당 음식은 식이섬유가 부족해요. 바나나, 사과, 또는 Trader Joe's 냉동 채소를 추가하세요.</span></div><span class="card-tag"><span class="en">Daily addition</span><span class="ko">매일 추가</span></span></div>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 13. ENERGY ═══════════ -->
+<div id="energy">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 13</p>
+    <h2 class="section-title">⚡ <span class="en">Energy Crash Recovery</span><span class="ko">에너지 저하 회복</span></h2>
+    <p class="section-subtitle"><span class="en">Why you feel drained — and what actually works (not just more coffee).</span><span class="ko">왜 피곤한지, 그리고 실제로 효과 있는 방법들 (커피 추가 말고).</span></p>
+  </div>
+  <ul class="tip-list">
+    <li><div class="tip-num">4</div><div><div class="tip-title"><span class="en">10-min power nap (12–2 PM)</span><span class="ko">10분 파워냅 (오후 12~2시)</span></div><div class="tip-desc"><span class="en">A 10–20 minute nap in the early afternoon resets alertness without causing grogginess. Set an alarm for exactly 20 min. Going over 30 min causes "sleep inertia" — feeling worse after.</span><span class="ko">오후 12~2시 사이 10~20분 낮잠은 졸리지 않게 집중력을 회복시켜요. 20분 알람을 꼭 맞추세요. 30분 넘으면 역효과.</span></div></div></li>
+    <li><div class="tip-num">5</div><div><div class="tip-title"><span class="en">Replace sugar snacks with protein</span><span class="ko">설탕 간식을 단백질로</span></div><div class="tip-desc"><span class="en">US vending machine snacks spike blood sugar then crash it — causing the 3 PM slump. Replace with: Chobani Greek yogurt, a handful of almonds, a hard-boiled egg, or string cheese.</span><span class="ko">미국 자판기 간식은 혈당을 올렸다 급속히 떨어뜨려요. Chobani, 아몬드 한 줌, 삶은 달걀, 스트링 치즈로 대체하세요.</span></div></div></li>
+  </ul>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 14. SKIN ═══════════ -->
+<div id="skin" class="section-wrap">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 14</p>
+    <h2 class="section-title">🌿 <span class="en">Dry Skin Care</span><span class="ko">건조한 피부 관리</span></h2>
+    <p class="section-subtitle"><span class="en">US air + heating systems = extremely dry skin. Here's how to fight it.</span><span class="ko">미국 공기 + 히팅 시스템 = 극도의 건조함. 대응법을 알아봐요.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🧴</div><div class="card-title"><span class="en">CeraVe Moisturizing Cream</span><span class="ko">CeraVe 보습 크림</span></div><div class="card-desc"><span class="en">The gold standard for dry skin in the US. The big tub at Target or Costco lasts months. Apply immediately after showering while skin is still slightly damp — this locks in moisture better.</span><span class="ko">미국에서 건조 피부의 표준 제품. Target/Costco에서 큰 통이 수개월 간다. 샤워 직후 피부가 살짝 젖은 상태에서 바르면 보습 효과가 더 좋아요.</span></div><span class="usa-badge">🇺🇸 Target / Costco</span></div>
+    <div class="card"><div class="card-icon">💦</div><div class="card-title"><span class="en">Humidifier in the bedroom</span><span class="ko">침실 가습기</span></div><div class="card-desc"><span class="en">Levoit and TaoTronics ultrasonic humidifiers on Amazon (~$30–50) are quiet and effective. Target humidity is 40–50%. Also helps with nose/throat dryness and better sleep in heated homes.</span><span class="ko">Amazon에서 Levoit 가습기 ~$30~50. 목표 습도 40~50%. 코와 목 건조함에도 도움되고 수면 질도 개선돼요.</span></div><span class="usa-badge">🇺🇸 Amazon</span></div>
+    <div class="card"><div class="card-icon">☀️</div><div class="card-title"><span class="en">SPF 30+ sunscreen daily</span><span class="ko">SPF 30 이상 자외선 차단제</span></div><div class="card-desc"><span class="en">US sun is often stronger than Korea (especially southern states). La Roche-Posay and EltaMD are popular US dermatologist picks. H-Mart also stocks Korean sunscreens like Anessa.</span><span class="ko">미국 햇빛이 더 강해요 (특히 남부). La Roche-Posay, EltaMD가 미국 피부과 추천 제품. H마트에 Anessa 등 한국 선크림도 있어요.</span></div><span class="card-tag"><span class="en">Daily</span><span class="ko">매일</span></span></div>
+    <div class="card"><div class="card-icon">🛁</div><div class="card-title"><span class="en">Lukewarm showers, not hot</span><span class="ko">미지근한 샤워, 뜨거운 건 금물</span></div><div class="card-desc"><span class="en">Hot showers strip the skin's natural oil barrier, making dryness much worse. Especially important in winter when heating dries out the air inside. Aim for 5–10 min, not too hot.</span><span class="ko">뜨거운 물은 피부 유분막을 파괴해서 건조함을 악화시켜요. 겨울에 특히 중요. 5~10분, 너무 뜨겁지 않게.</span></div><span class="card-tag"><span class="en">Winter essential</span><span class="ko">겨울 필수</span></span></div>
+  </div>
+</div>
+</div>
+
+<hr class="section-divider"/>
+
+<!-- ═══════════ 15. EMERGENCY / CLINIC GUIDE ═══════════ -->
+<div id="emergency">
+<div class="section">
+  <div class="section-header">
+    <p class="section-eyebrow">Category 15</p>
+    <h2 class="section-title">🏥 <span class="en">US Clinic & Hospital Guide</span><span class="ko">미국 병원 이용 안내</span></h2>
+    <p class="section-subtitle"><span class="en">Knowing where to go before you need it saves time, money, and stress.</span><span class="ko">필요하기 전에 알아두면 시간과 돈과 걱정을 줄일 수 있어요.</span></p>
+  </div>
+  <div class="cards">
+    <div class="card" style="border-color: #FCA5A5;">
+      <div class="card-icon">🚨</div>
+      <div class="card-title"><span class="en">Emergency Room (ER) — life-threatening only</span><span class="ko">응급실 (ER) — 생명 위협 시에만</span></div>
+      <div class="card-desc"><span class="en">Use the ER only for chest pain, difficulty breathing, stroke symptoms, severe injuries, or anything life-threatening. ER visits without insurance can cost $1,000–$5,000+. Non-urgent ER visits waste hours and money.</span><span class="ko">흉통, 호흡 곤란, 뇌졸중 증상, 심한 부상 등 생명이 위협될 때만 사용하세요. 비보험 ER 방문은 $1,000~5,000+이 될 수 있어요.</span></div>
+      <span class="card-tag" style="background:#FEE2E2; color:#DC2626;"><span class="en">Life-threatening only</span><span class="ko">생명 위협 시에만</span></span>
+    </div>
+    <div class="card" style="border-color: #FCD34D;">
+      <div class="card-icon">🏪</div>
+      <div class="card-title"><span class="en">Urgent Care — non-emergency but same day</span><span class="ko">Urgent Care — 비긴급, 당일 진료</span></div>
+      <div class="card-desc"><span class="en">For fevers, minor injuries, UTIs, ear infections, sprains, and anything that needs a doctor today but isn't life-threatening. Much cheaper than ER ($100–$300 with insurance). Search "urgent care near me."</span><span class="ko">발열, 경미한 부상, 요로감염, 귀 감염, 삐임 등 당일 진료가 필요할 때. ER보다 훨씬 저렴해요 ($100~300). "urgent care near me" 검색.</span></div>
+      <span class="card-tag orange"><span class="en">Same-day, non-emergency</span><span class="ko">당일, 비긴급</span></span>
+    </div>
+    <div class="card">
+      <div class="card-icon">💊</div>
+      <div class="card-title"><span class="en">MinuteClinic (CVS) & Health Clinic (Walgreens)</span><span class="ko">MinuteClinic (CVS) & Health Clinic (Walgreens)</span></div>
+      <div class="card-desc"><span class="en">Walk-in clinics inside pharmacies for minor illnesses, vaccinations, and health screenings. Very affordable even without insurance (~$89–139 per visit). No appointment needed.</span><span class="ko">약국 안 워크인 클리닉. 가벼운 질환, 예방접종, 건강 검진. 보험 없어도 ~$89~139/방문. 예약 불필요.</span></div>
+      <span class="usa-badge">🇺🇸 CVS / Walgreens</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">💻</div>
+      <div class="card-title"><span class="en">Telehealth — best for first contact</span><span class="ko">원격 진료 — 첫 상담에 최적</span></div>
+      <div class="card-desc"><span class="en">Teladoc and MDLive offer video consultations in minutes. Many insurance plans cover telehealth at low or no cost. Great for discussing symptoms, getting a prescription refill, or deciding if you need in-person care.</span><span class="ko">Teladoc, MDLive 앱으로 수분 내 화상 진료. 많은 보험이 저비용 또는 무료로 커버. 증상 상담, 처방 갱신, 직접 방문 필요 여부 판단에 좋아요.</span></div>
+      <span class="card-tag green"><span class="en">Cheapest option</span><span class="ko">가장 저렴한 방법</span></span>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-title"><span class="en">Community Health Centers (sliding scale)</span><span class="ko">Community Health Center (소득별 요금)</span></div>
+      <div class="card-desc"><span class="en">Federally Qualified Health Centers serve everyone regardless of insurance or immigration status, with fees based on income. Find one at findahealthcenter.hrsa.gov. Often have Korean-speaking staff.</span><span class="ko">보험이나 체류 신분에 관계없이 진료하며, 소득에 따라 요금이 결정돼요. findahealthcenter.hrsa.gov에서 검색. 한국어 직원이 있는 곳도 있어요.</span></div>
+      <span class="card-tag green"><span class="en">No insurance needed</span><span class="ko">보험 없어도 가능</span></span>
+    </div>
+    <div class="card">
+      <div class="card-icon">💬</div>
+      <div class="card-title"><span class="en">How to describe symptoms in English</span><span class="ko">영어로 증상 설명하는 법</span></div>
+      <div class="card-desc"><span class="en"><b>Pain:</b> "I have a sharp/dull/throbbing pain in my ___." <b>Scale:</b> "On a scale of 1–10, it's a 7." <b>Duration:</b> "It started 3 days ago and gets worse at night." You can also show this to the doctor and point.</span><span class="ko"><b>통증:</b> "I have a sharp pain in my ___." <b>강도:</b> "On a scale of 1–10, it's a 7." <b>기간:</b> "3 days ago, worse at night." 이 카드를 의사에게 보여주고 가리켜도 돼요.</span></div>
+      <span class="card-tag"><span class="en">Useful phrases</span><span class="ko">유용한 표현</span></span>
+    </div>
+  </div>
+  <div class="us-tip">
+    <p class="us-tip-title">🇺🇸 <span class="en">Important notes on US healthcare for visa holders</span><span class="ko">비자 소지자를 위한 미국 의료비 안내</span></p>
+    <p class="us-tip-body">
+      <span class="en"><b>J-1/J-2 visa:</b> Your sponsor organization must provide insurance — check your policy details.<br/><b>No insurance?</b> Look into ACA Marketplace plans at healthcare.gov — many have low or $0 premiums based on income.<br/><b>GoodRx app</b> — reduces prescription drug costs by 50–80% even without insurance. Always check before paying full price at the pharmacy.<br/><b>Emergency care is available regardless of immigration status</b> under EMTALA law — know your rights.</span>
+      <span class="ko"><b>J-1/J-2 비자:</b> 스폰서 기관이 보험을 제공해야 해요 — 내 정책 내용을 꼭 확인하세요.<br/><b>보험 없나요?</b> healthcare.gov에서 ACA Marketplace 플랜을 확인하세요 — 소득에 따라 저렴하거나 무료일 수 있어요.<br/><b>GoodRx 앱</b> — 보험 없이도 약값을 50~80% 절감. 약국에서 돈 내기 전에 항상 확인하세요.<br/><b>EMTALA 법에 의해 체류 신분과 무관하게 응급 처치는 받을 수 있어요</b> — 권리를 알아두세요.</span>
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong><span class="en">It's Okay · 괜찮아요</span><span class="ko">괜찮아요 · It's Okay</span></strong><br/>
+  <span class="en">Cheering on everyone working hard far from home 🙏<br/>Made with care for Koreans in the US</span>
+  <span class="ko">타지에서 고생하시는 모든 분들을 응원합니다 🙏<br/>미국에서 열심히 사시는 분들을 위해 만들었습니다</span>
+  <br/><br/>
+  <span style="font-size:0.74rem; color:#6C757D;">
+    <span class="en">⚠️ This site provides general wellness &amp; lifestyle information only — it is not medical advice and does not substitute for a healthcare professional. Always consult your doctor before making changes to your health routine.</span>
+    <span class="ko">⚠️ 이 사이트는 일반 건강·생활 정보만을 제공하며 의료 조언이 아닙니다. 건강 루틴을 변경하기 전에 반드시 의사와 상담하세요.</span>
+  </span>
+</footer>
+
+<script>
+  /* ─────────── Language Toggle ─────────── */
+  function toggleLang() {
+    document.body.classList.toggle('lang-ko');
+  }
+
+  /* ─────────── Smooth Scroll ─────────── */
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 70;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  /* ─────────── Animation Helpers ─────────── */
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function easeOut(t) { return 1 - (1-t)*(1-t); }
+
+  function pingPong(el, attr, a, b, period, offset) {
+    if (!el) return;
+    offset = offset || 0;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts - offset;
+      let t = ((ts - start) % period) / period;
+      let p = t < 0.5 ? easeInOut(t * 2) : easeInOut((1 - t) * 2);
+      el.setAttribute(attr, lerp(a, b, p));
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ══ BACK 1: Knee-to-Chest ══
+     Thigh rotates up, shin follows, hands track knee */
+  (function() {
+    const thigh = document.getElementById('b1-thigh');
+    const shin = document.getElementById('b1-shin');
+    const hands = document.getElementById('b1-hands');
+    if (!thigh) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 2800) / 2800;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      // Thigh: x2 from 150,106 → 105,88 (knee pulls toward chest)
+      const kx = lerp(150, 106, p);
+      const ky = lerp(106, 86, p);
+      thigh.setAttribute('x2', kx);
+      thigh.setAttribute('y2', ky);
+      // Shin hangs from knee
+      shin.setAttribute('x1', kx);
+      shin.setAttribute('y1', ky);
+      shin.setAttribute('x2', lerp(150, kx + 2, p));
+      shin.setAttribute('y2', lerp(84, ky - 22, p));
+      // Hands track the knee
+      hands.setAttribute('cx', kx);
+      hands.setAttribute('cy', ky + 8);
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ BACK 3: Seated Twist ══ */
+  (function() {
+    const torso = document.getElementById('b3-torso');
+    if (!torso) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 3000) / 3000;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      const angle = lerp(0, 18, p);
+      torso.setAttribute('transform', `rotate(${angle}, 100, 102)`);
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+
+
+  /* ══ BACK 6: Side stretch — arm arcs overhead ══ */
+  (function() {
+    const arm = document.getElementById('b6-arm');
+    if (!arm) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 3000) / 3000;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      arm.setAttribute('x2', lerp(152, 96, p));
+      arm.setAttribute('y2', lerp(66, 42, p));
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ SH1: Neck tilt — head tilts side to side ══ */
+  (function() {
+    const head = document.getElementById('sh1-head');
+    const eye = document.getElementById('sh1-eye');
+    if (!head) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 3000) / 3000;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      // Only tilt horizontally a small amount, keep y fixed so head stays on neck
+      const newCx = lerp(110, 102, p);
+      head.setAttribute('cx', newCx);
+      head.setAttribute('cy', '66');
+      if (eye) { eye.setAttribute('cx', newCx + 5); eye.setAttribute('cy', '63'); }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ SH2: Shoulder rolls — ellipses orbit in place ══ */
+  (function() {
+    const l = document.getElementById('sh2-left');
+    const r = document.getElementById('sh2-right');
+    if (!l || !r) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 1600) / 1600;
+      const angle = t * Math.PI * 2;
+      // Reduced orbit radius so shoulders stay close to body
+      l.setAttribute('cy', 92 + Math.sin(angle) * 5);
+      l.setAttribute('cx', 68 + Math.cos(angle) * 3);
+      r.setAttribute('cy', 92 + Math.sin(angle + Math.PI) * 5);
+      r.setAttribute('cx', 140 + Math.cos(angle + Math.PI) * 3);
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ SH3: Cross-body — arm slides across ══ */
+  (function() {
+    const arm = document.getElementById('sh3-arm');
+    if (!arm) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 2600) / 2600;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      arm.setAttribute('x2', lerp(60, 46, p));
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ SH4: Chin tuck — head moves back slightly ══ */
+  (function() {
+    const head = document.getElementById('sh4-head');
+    const eye = document.getElementById('sh4-eye');
+    if (!head) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 2600) / 2600;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      // Reduced movement from 16px to 8px so head stays on neck
+      const newCx = lerp(110, 102, p);
+      head.setAttribute('cx', newCx);
+      if (eye) eye.setAttribute('cx', newCx - 5);
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ SH5: Doorframe arms — chest lifts ══ */
+  (function() {
+    const aL = document.getElementById('sh5-arm-l');
+    const aR = document.getElementById('sh5-arm-r');
+    if (!aL) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 2600) / 2600;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      aL.setAttribute('y1', lerp(82, 72, p));
+      aR.setAttribute('y1', lerp(82, 72, p));
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ EX1: Jumping jacks ══ */
+  (function() {
+    const armL = document.getElementById('ex1-arm-l');
+    const armR = document.getElementById('ex1-arm-r');
+    const legL = document.getElementById('ex1-leg-l');
+    const legR = document.getElementById('ex1-leg-r');
+    if (!armL) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 900) / 900;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      if (armL) { armL.setAttribute('x2', lerp(60, 38, p)); armL.setAttribute('y2', lerp(82, 44, p)); }
+      if (armR) { armR.setAttribute('x2', lerp(140, 162, p)); armR.setAttribute('y2', lerp(82, 44, p)); }
+      if (legL) { legL.setAttribute('x2', lerp(84, 62, p)); }
+      if (legR) { legR.setAttribute('x2', lerp(116, 138, p)); }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ EX2: Desk leg raise ══ */
+  (function() {
+    const leg = document.getElementById('ex2-leg');
+    if (!leg) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 2200) / 2200;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      const angle = lerp(-15, -38, p);
+      leg.setAttribute('transform', `rotate(${angle}, 111, 118)`);
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+
+  /* ══ EX3: Walking ══ */
+  (function() {
+    const armL = document.getElementById('ex3-arm-l');
+    const armR = document.getElementById('ex3-arm-r');
+    const legL = document.getElementById('ex3-leg-l');
+    const legR = document.getElementById('ex3-leg-r');
+    if (!armL) return;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const t = ((ts - start) % 1100) / 1100;
+      const p = t < 0.5 ? easeInOut(t*2) : easeInOut((1-t)*2);
+      if (armL) { armL.setAttribute('x2', lerp(58, 68, p)); armL.setAttribute('y2', lerp(100, 74, p)); }
+      if (armR) { armR.setAttribute('x2', lerp(140, 128, p)); armR.setAttribute('y2', lerp(62, 88, p)); }
+      if (legL) { legL.setAttribute('x2', lerp(74, 88, p)); legL.setAttribute('y2', lerp(150, 165, p)); }
+      if (legR) { legR.setAttribute('x2', lerp(126, 112, p)); legR.setAttribute('y2', lerp(132, 158, p)); }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  })();
+</script>
+</body>
